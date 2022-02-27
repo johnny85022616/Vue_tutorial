@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <style>
+
+    
+      .bounce-enter-active{
+        animation: bounce .5s;
+      }
+
+      .bounce-leave-active{
+          animation: bounce .5s reverse;
+      }
+
+      @keyframes bounce{
+          0%{
+              opacity:0;
+              transform:translateX(100px);
+          }
+          100%{
+              opacity:1;
+              transform:translateX(0px);
+          }
+      }
+     
+
+  </style>
+  <body>
+    <div id="root">
+        <input type="text" v-model="mytext">
+        <button @click="handleAddClick">新增</button>
+
+        <transition-group tag="ul" name="bounce">
+            <li v-for="(data,index) in list" :key="data">
+                {{data}}
+                <button @click="handleDeleteClick(index)">刪除</button>
+            </li>
+        </transition-group>
+    </div>
+    <script type="text/javascript">
+      new Vue({
+        el: "#root",
+        data: {
+            mytext:"",
+            list:[]
+        },
+        methods:{
+            handleAddClick(){
+                this.list.push(this.mytext)
+                this.mytext=''
+            },
+            handleDeleteClick(index){
+                this.list.splice(index,1)
+            }
+        }
+      });
+    </script>
+  </body>
+</html>

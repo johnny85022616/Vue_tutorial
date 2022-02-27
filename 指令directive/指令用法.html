@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="box">
+        <div v-hello="'red'">1111111</div>
+        <div v-hello="'yellow'">2222222</div>
+        <div v-hello="mycolor">3333333</div>
+        <button @click="mycolor='purple'">click me</button>
+    </div>
+    <script type="text/javascript">
+// 用途為操作底層dom
+    Vue.directive("hello",{
+        //指令-生命週期-創建(表當前節點以插入父組件中)---->只會執行一次
+        inserted(el,bind){          
+            el.style.background = bind.value;
+            console.log("當前節點已插入父節點中");
+        },
+        //指令-生命週期-更新
+        update(el,bind){
+            el.style.background = bind.value;
+        }
+    })
+
+      var vm = new Vue({ 
+          el: "#box", 
+          data: {
+             mycolor:"blue"
+            }, 
+            mounted(){
+              console.log("mounted");
+            }
+        });
+    </script>
+  </body>
+</html>

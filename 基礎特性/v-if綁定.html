@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <!-- 利用 v-if、v-else 動態決定dom元件的增刪 -->
+    <div id="vb">
+        <button @click="handleAddButtonClick">注入資料</button>
+        <button @click="handleDeleteButtonClick">刪除資料</button>
+        <div v-if="dataList.length !== 0 ">
+            <div>資料區塊</div>
+            <ul>
+                <li v-for="data in dataList">{{data.name}}</li>
+            </ul>
+        </div>
+        <div v-else>無資料</div>
+    </div>
+
+
+<script type="text/javascript">
+    var vm = new Vue({
+        el:'#vb',
+        data:{
+            dataList:[],
+        },
+        methods:{
+            handleAddButtonClick(){
+               let arr = [{name:'johnny'} , {name:'mary'}] 
+               //this.dataList.concat(arr) //和 react 不同 ， 用類似concat這種不會改變原來陣列值的方法反而無法造成dom更新
+               arr.forEach((ele)=>{
+                   this.dataList.push(ele);
+               })
+            },
+            handleDeleteButtonClick(){
+                this.dataList = []
+            }
+        }
+    })
+</script>    
+</body>
+
+</html>

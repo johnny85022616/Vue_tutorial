@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <style>
+
+    
+      .bounce-enter-active{
+        animation: bounce .5s;
+      }
+
+      .bounce-leave-active{
+          animation: bounce .5s reverse;
+      }
+
+      @keyframes bounce{
+          0%{
+              opacity:0;
+              transform:translateX(100px);
+          }
+          100%{
+              opacity:1;
+              transform:translateX(0px);
+          }
+      }
+     
+
+  </style>
+  <body>
+<!-- 這裡的多個元素過度是指一個顯示另一個就隱藏，非多個元素同時出現隱藏-->
+    <div id="root">
+      <button @click="isShow=!isShow">click</button>
+
+      <transition name="bounce" mode="out-in">
+<!-- 當有相同標簽名的元素切換時，需要通過key特性設置唯一的值來標記，已讓Vue區分它們，否則Vue為了效率只會替換相同標籤內的內容 -->
+        <div v-if="isShow" key="1">aaaaaa</div>
+        <div v-else key="2">bbbbbb</div>
+      </transition>
+    </div>
+    <script type="text/javascript">
+      new Vue({
+        el: "#root",
+        data: {
+          isShow: false,
+        },
+      });
+    </script>
+  </body>
+</html>

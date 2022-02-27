@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <!-- computed 與普通 method 的差異不只在於呼叫方式不同，computed 屬性可以緩存計算，若頁面需要用到多次計算結果，
+        computed 屬性不會重複做計算，若是普通 method 則是呼叫幾次就計算幾次，所以 computed 屬性較普通 method 有較好
+        的性能表現。
+    -->
+    <div id="box">
+      <div>計算屬性 : {{getNameUpperCase}}</div>
+      <div>普通方法 : {{getNameUpperCaseMethod()}}</div>
+
+      <div>
+        再一次需要計算結果
+        <div>計算屬性 : {{getNameUpperCase}}</div>
+        <div>普通方法 : {{getNameUpperCaseMethod()}}</div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: "#box",
+        data: {
+          name: "johnny",
+          list:[]
+        },
+        methods: {
+          getNameUpperCaseMethod() {
+            console.log("method execute"); //呼叫兩次計算兩次
+            return this.name.toUpperCase();
+          },
+        },
+        computed: {
+          getNameUpperCase() {
+            console.log("computed execute"); //呼叫兩次，計算一次
+            return this.name.toUpperCase();
+          }
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+<!-- 父組件中有兩個子組件分別為navbar及sidebar，navbar中有一個按鈕控制sidebar的顯示及隱藏，navbar中的按鈕藉由
+    emit觸發父組件控制 show,hide 的 method，來達到改變父組件中狀態的效果。
+-->
+    <div id="root">
+        <navbar @myevent="show"></navbar>
+        <sidebar v-show="isShow"></sidebar>
+    </div>
+    <script type="text/javascript">
+
+        Vue.component("navbar",{
+            template:`
+                <div style="background:green">
+                    <button @click="open()">click</button>
+                    我是navbar 
+                </div>
+            `,
+            methods:{
+                open(){
+                    this.$emit("myevent")
+                }
+            }
+        })
+
+        Vue.component("sidebar",{
+            template:`
+                <div style="background:yellow ; width:100px ; height:100vh">
+                    <ul>
+                        <li>1111</li>
+                        <li>2222</li>
+                        <li>3333</li>
+                        <li>4444</li>
+                    </ul>
+                </div>
+            `
+        })
+
+        new Vue({
+            el:"#root",
+            data:{
+                isShow:false
+            },
+            methods:{
+                show(){
+                    console.log("4444");
+                    this.isShow = !this.isShow;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

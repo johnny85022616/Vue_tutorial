@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
+    />
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+  </head>
+  <style>
+    .swiper {
+      width: 100%;
+      height: 300px;
+    }
+  </style>
+  <body>
+    <div id="root">
+      <!--此範例重點在於必須在父組件2秒後更新state時，同時讓子組件(swiper)刷新整個組件執行mounted，但因為vue diff演算法的緣故
+    ，他會比對前後的組件是否相同，若相同僅會更新內容不會更新整個組件，因此要設置key值，設法讓兩次key值不同，diff演算法才會創
+    建出新的一個組件
+-->
+      <swiper :list="list" :key="list.length"></swiper>
+    </div>
+    <script type="text/javascript">
+      Vue.component("swiper", {
+        template: `
+          <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="data in list">{{data}}</div>
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+         </div>
+          `,
+        props: ["list"],
+        mounted() {
+          new Swiper(".swiper", {
+            loop: true,
+
+            // If we need pagination
+            pagination: {
+              el: ".swiper-pagination",
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              },
+          });
+          console.log("swiper mounted");
+        },
+      });
+      var vm = new Vue({
+        el: "#root",
+        data: {
+          list: [],
+        },
+        methods: {},
+        mounted() {
+          console.log("root mounted");
+          setTimeout(() => {
+            this.list = [1111, 2222, 3333];
+            // console.log(document.querySelectorAll('.swiper')); //mounted 時 dom 節點還未創建完畢
+            // console.log(this.$el.outerHTML); //mounted 時 dom 節點還未創建完畢
+          }, 2000);
+        },
+      });
+    </script>
+  </body>
+</html>

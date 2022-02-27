@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="box">
+        <ul>
+            <button @click="handleClick">取的fetch資料</button>
+            <li v-for="data in list">{{data}}</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: "#box",
+        data: {
+          list: [],
+        },
+        methods: {
+          handleClick() {
+            fetch("../fakeApi/fakeData.json")
+              .then((res) => res.json())
+              .then((res) => {
+                  this.list = res.data.productInfo;
+              });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

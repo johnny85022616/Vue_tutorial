@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <h1>lazy (不會每次輸入都修改state，而是blur之後才觸發state的修改)</h1>
+        <input type="text" v-model.lazy="mytext">{{mytext}}
+        <h1>number (會自動無視非數字的輸入，第一個字除外，若第一個字輸入非數字則此修飾符會失去效用，因此一般都直接把type設為number)</h1>
+        <input type="text" v-model.number="myNumber">{{myNumber}}
+        <h1>trim (會自動刪去首尾空白)</h1>
+        <input type="text" v-model.trim="myInput">|{{myInput}}|
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                mytext:"",
+                myNumber:0,
+                myInput:""
+            },
+            methods:{
+
+            }
+        })
+    </script>
+</body>
+</html>

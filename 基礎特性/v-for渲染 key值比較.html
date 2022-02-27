@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="box">
+        <h3>Please make your choice</h3>
+        <ul>
+    <!-- 若未加上key屬性，vue會透過"就地更新(In-place patch)的策略進行變更，也就是說vue不會移動任和dom元素來配合
+         數據順序，只是就地去更新項目內容確保他們在每個索引位置正看的渲染
+        "-->
+            <li v-for="(name,index) in names" :key="name.title">{{name.title}} : 
+                <select>
+                    <option disabled value="" selected>Please select one</option>
+                    <option v-for="(item,index) in types" :value="item.value">{{item.title}}</option>
+                </select>
+            </li>
+        </ul>
+        <p>
+            <button @click="sortAsc">Sort by name ASC</button>
+            <button @click="sortDesc">Sort by name DESC</button>
+        </p>
+    </div>
+    <script type="text/javascript">
+      var vm = new Vue({ 
+          el: "#box", 
+          data: {
+             names:[
+                 {title:"Vue" , value:"Vue"},
+                 {title:"React" , value:"React"},
+                 {title:"Angular" , value:"Angular"},
+                 {title:"Laravel" , value:"Laravel"},
+                 {title:"CakePhp" , value:"CakePhp"},
+                 {title:"Django" , value:"Django"},
+             ],
+             types:[
+                 {title:"Frontend" , value:"Frontend"},
+                 {title:"Backend" , value:"Backend"},
+             ]
+            }, 
+          methods: {
+            sortAsc(){
+                this.name = this.names.sort(function(a,b){
+                    return a.title>b.title?1:-1
+                })
+            },
+            sortDesc(){
+                this.name = this.names.sort(function(a,b){
+                    return a.title<b.title?1:-1
+                })
+            }
+          } 
+        });
+    </script>
+  </body>
+</html>

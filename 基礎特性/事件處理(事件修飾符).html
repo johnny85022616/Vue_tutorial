@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <button @click="handleClick">click1</button> <!-- 不需要傳入參數的寫法 -->
+        <button @click="handleClick()">click2</button> <!-- 需要傳入參數的寫法 -->
+        <button @click="isShow = !isShow">click3</button> <!-- 直接把method中內容寫進來的寫法 -->
+        <div v-show="isShow">@@@@@@@@@@@@@@@@@@@@@@@@</div>
+        
+        <!-- 事件修飾符 -->
+        <ul @click.self="handleUlClick"> <!-- 只有自己本身可觸發事件，避免冒泡的另一種寫法-->
+            <li @click.stop="handleLiClick">1111</li> <!-- 阻止冒泡 -->
+            <li @click="handleLiClick">2222</li>
+            <li @click.once="handleLiClick">3333</li> <!-- 觸發一次後即解除與事件綁定 -->
+        </ul>
+
+        <a href="http://www.google.com" @click.prevent="handlePageChange">changePage</a> <!-- 阻止tag默認行為-->
+        <br>
+        <input type="text" @keyup.enter="handleEnterClick" v-model="value">  <!-- 按鍵修飾符 (本例為按下enter觸發，也可換為案件代碼 ex:enter的案件代碼為13)-->
+        <ul>
+            <li v-for="data in list">{{data}}</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                isShow:false,
+                list:[],
+                value:''
+            },
+            methods:{
+                handleClick(){
+                    this.isShow = !this.isShow;
+                },
+                handleUlClick(){
+                    console.log("ul click");
+                },
+                handleLiClick(){
+                    console.log("li click");
+                },
+                handlePageChange(){
+                    console.log("handlePageChange");
+                },
+                handleEnterClick(){
+                    this.list.push(this.value)
+                    this.value=""
+                }
+            }
+        });
+    </script>
+</body>
+</html>

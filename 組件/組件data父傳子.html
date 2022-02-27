@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <navbar myname="home" :myshow="false"></navbar>
+        <navbar myname="list" :myshow="true"></navbar>
+        <navbar :myname="parentname" :myshow="true"></navbar> <!-- 將父組件data傳入子組件，用動態綁定 -->
+    </div>
+
+    <script type="text/javascript">
+
+        Vue.component("navbar",{
+            template:`
+                <div>
+                    <button>返回</button>
+                    navbar -- {{myname}}
+                    <button v-show="myshow">首頁</button>        
+                </div>
+            `,
+            //props:["myname" , "myshow"] //接收父組件傳來的屬性(array寫法)
+            props:{  //object寫法，可用於屬性驗證(Number,String,Array,Object,Function,null(不限制類型))
+                myname:String,
+                myshow:Boolean
+            }
+
+        });
+
+        new Vue({
+            el:"#root",
+            data:{
+                parentname:"父組件狀態"
+            }
+        })
+    </script>
+
+</body>
+</html>

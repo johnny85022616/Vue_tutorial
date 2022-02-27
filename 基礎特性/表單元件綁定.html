@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <!--表單綁定(input , checkbox(單選、多選) , radiobutton)-->
+    <div id="box">
+        <input type="text" v-model="inputValue"/>
+        <br>
+        <input type="checkbox" v-model="isChecked"/>是否同意
+
+        <h1>愛好(複選)</h1>
+        <input type="checkbox" v-model="checkgroup" value="run">run
+        <input type="checkbox" v-model="checkgroup" value="swing">swing
+        <input type="checkbox" v-model="checkgroup" value="basketball">basketball
+        <input type="checkbox" v-model="checkgroup" value="baseball">baseball
+
+        <br>
+        <h1>語言(單選)</h1>
+        <input type="radio" v-model="picked" value="java">java
+        <input type="radio" v-model="picked" value="php">php
+        <input type="radio" v-model="picked" value="python">python
+        <input type="radio" v-model="picked" value="javascript">javascript
+
+        <br>
+        <br>
+        <button @click="handleClick">送出</button>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:"#box",
+            data:{
+                inputValue:'',
+                isChecked:false,
+                checkgroup:[],
+                picked:""
+            },
+            methods:{
+                handleClick(){
+                    let formData = {
+                        inputValue:this.inputValue,
+                        isChecked:this.isChecked,
+                        checkgroup:this.checkgroup,
+                        picked:this.picked
+                    }
+                    console.log(formData);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

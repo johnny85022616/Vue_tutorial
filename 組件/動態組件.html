@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+<!-- 若在component動態組件之外加上<keep-alive>標籤，則可以保留個組件當中的state -->
+            <keep-alive>
+<!-- 若單使用component動態組件，在切換時會刪去舊有dom組件，新增新的dom組件。所以任何舊有dom組件中的state都會被刪除 -->
+            <components :is="page"></components> 
+        </keep-alive>
+            <footer>
+                <ul>
+                    <button @click="changePage('home')">首頁</button>
+                    <button @click="changePage('list')">列表頁</button>
+                    <button @click="changePage('carshop')">購物車頁</button>
+                </ul>
+            </footer>
+    </div>
+    <script type="text/javascript">
+        
+        new Vue({
+            el:"#root",
+            data:{
+                page:"home"
+            },
+            methods:{
+                changePage(page){
+                    this.page = page;
+                }
+            },
+            components:{
+                "home":{
+                    template:`<div>
+                        home
+                            <input type='text' model="mytext">
+                        </div>`,
+                    data(){
+                       return {
+                           mytext:""
+                       }
+                    }
+                },
+                "list":{
+                    template:`<div>list</div>`
+                },
+                "carshop":{
+                    template:`<div>carshop</div>`
+                }
+            }
+        });
+    </script>
+</body>
+</html>

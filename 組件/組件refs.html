@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<!-- 
+    ＊＊＊不太建議使用＊＊＊
+
+    1.ref放在標籤上，拿到的是原生節點
+    2.ref放在組件上，拿到的是組件對象
+-->
+<body>
+    <div id="root">
+        <input type="text" ref="myInputRef"> 
+        <button @click="handleClick">click</button>
+        <child ref="myChildRef"></child>
+    </div>
+    <script type="text/javascript">
+
+        Vue.component("child",{
+            template:`
+                <div>
+                    child
+                </div>
+            `,
+            data(){
+                return {
+                    childname:"子組件的狀態"
+                }
+            },
+            methods:{
+                getFatherData(fatherSate){
+                    console.log(fatherSate);
+                }
+            }
+        })
+        new Vue({
+            el:"#root",
+            data:{
+                fathername:"父組件的狀態"
+            },
+            methods:{
+                handleClick(){
+                    console.log(this.$refs.myInputRef.value); //ref放在input標籤上，拿到的是原生節點，加上value之後會拿到原聲input值
+                    console.log(this.$refs.myChildRef);//ref放在組件上，拿到的是組件對象(child的組件對象)
+                    console.log(this.$refs.myChildRef.childname);//從child的組件對象上獲取狀態(同子傳父效果)
+                    this.$refs.myChildRef.getFatherData(this.fathername); //可實作出父傳子的效果
+
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="box">
+      <navbar></navbar>
+      <sidebar></sidebar>
+    </div>
+    <script type="text/javascript">
+
+      //Vue組件的規範
+      //1.自訂一組件最外層必須有個element將所有內容包住(同react jsx寫法)
+      //2.父子組件data無法直接共享
+      //3.組件中的data屬性必須失一個function的寫法
+
+
+      //全域組建定義(作用域隔離)
+      Vue.component("navbar", {
+        template: `
+                <div style="background:yellow">
+                    我是navbar名字是{{name}}
+                    <button @click="handleClick">返回</button>
+                    <navbarChild/>
+                </div>
+            `,
+        data(){
+            return{
+                name:"Johnny"
+            }
+        },
+        methods: {
+          handleClick() {
+            alert("click!!!");
+          },
+        },
+        //區域組件(只可在定義的組件當中使用)
+        components:{  
+            navbarChild:{
+                template:`<div>我是navbarChild<div>`
+            }
+        }
+      });
+
+      Vue.component("sidebar", {
+        template: `
+            <div style="background:red">
+                    我是sidebar
+                </div>
+            `,
+      });
+
+      new Vue({
+        el: "#box",
+      }); //root component
+    </script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        父組件{{money}}
+        <child @myevent="getMoney($event)"></child>  
+        <!-- @myevent類似於一個帳戶帳號，綁定的function 會傳入一個$event
+            參數，其$event參數為子組件傳來的東西，在此範例中為子組件中的 dollar 狀態
+        -->
+    </div>
+    <script type="text/javascript">
+
+        Vue.component("child",{
+            template:`
+                <div>
+                    <div>child組件</div>
+                    <button @click="payMoney">按我將狀態傳給父組件</button>
+                </div>
+            `,
+            data(){
+                return {
+                    money:20000
+                }
+            },
+            methods:{
+                payMoney(){
+    //$emit 主要功能為在子組件觸發父組件所綁定的function
+    //$emit第一個參數傳入父組件所定義的 @myevent(此範例中相當於帳戶帳號)，第二個參數傳入要傳到父組件的東西(此範例傳入要給父組件的錢)
+                    this.$emit("myevent",this.money);  
+                }
+            }
+        })
+        new Vue({
+            el:"#root",
+            data:{
+                money:0
+            },
+            methods:{
+                getMoney(event){  //接收到子組間傳來的dollar狀態
+                    console.log("拿到了"+event+"元");
+                    this.money+=event  //將自己的dollar狀態更新為子組件的錢
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>

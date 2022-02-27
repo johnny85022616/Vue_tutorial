@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="box">
+      <button type="button" @click="toggleBtn = true">取得 User</button>
+      <p>{{ userComputed }}</p>
+      <p>{{ user }}</p>
+    </div>
+
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: "#box",
+        data: {
+          user: "",
+          toggleBtn: false,
+        },
+        methods: {},
+        computed: {  //無法處理非同步工作
+         userComputed() {
+            fetch("../fakeApi/fakeData.json")
+              .then((res) => res.json())
+              .then((res) => {
+                console.log(11111);
+                return res.data.productInfo;
+              });
+          },
+        },
+        watch: {  //可以處理非同步工作
+           toggleBtn() {
+            this.user = "loading...";
+            try {
+                fetch("../fakeApi/fakeData.json")
+              .then((res) => res.json())
+              .then((res) => {
+                console.log(11111);
+                this.user = res.data.productInfo;
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

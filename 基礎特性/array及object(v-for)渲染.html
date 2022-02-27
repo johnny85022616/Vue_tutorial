@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <!-- 利用 v-for 做遍歷渲染 -->>
+    <div id="box">
+    <h1>陣列</h1>
+      <ul>
+        <li v-for="(data,index) in arrayList" :key='index'>   <!-- key 必須為唯一值-->
+          index: {{index}} , data: {{data}}
+        </li>
+      </ul>
+      <h1>物件</h1>
+      <ul>
+        <li v-for="(value,key) in obj" :key="key">   <!-- key 必須為唯一值-->
+          {{key}} : {{value}}
+        </li>
+      </ul>
+    </div>
+    <script type="text/javascript">
+      var vm = new Vue({ 
+          el: "#box", 
+          data: {
+              arrayList:["1111","2222","3333"],
+              obj:{
+                  name:"johnny",
+                  age:22,
+                  height:180
+              }
+            }, 
+          methods: {
+
+          } 
+        });
+    </script>
+  </body>
+</html>
