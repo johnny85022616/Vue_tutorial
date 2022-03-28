@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="box">
+      <div>
+        <h2>{{name}}</h2>
+        <ul>
+          <li v-for="data in list">{{data}}</li>
+        </ul>
+        <button @click="handleclick">click</button>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: "#box",
+        data: {
+          name: "johnny",
+          list:[{name:"111"} , {name:"222"} , {name:"333"} , {name:"444"}]
+        },
+        methods: {
+          handleclick (){
+            // this.list[0] = {    //無法直接對指定index做改變(值會改變但不會觸發vue template更新機制)
+            //   name :"555"
+            // }
+            this.list.splice(0,1 , {name:"6666"})   // 利用splice刪除原本的再將要改變的插入該位置
+          }
+        },
+      });
+    </script>
+  </body>
+</html>
