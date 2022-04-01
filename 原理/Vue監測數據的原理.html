@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+			
+      let vm = new Vue({
+        data: {
+          name: "張三",
+          age: 18,
+        },
+      });
+
+      function Vue(option) {
+        this._data = option.data;
+
+        //產生 proxy
+        const keys = Object.keys(this._data);
+        keys.forEach((k) => {
+          Object.defineProperty(this, k, {
+            get() {
+              return this._data[k];
+            },
+            set(value) {
+              this._data[k] = value;
+            },
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

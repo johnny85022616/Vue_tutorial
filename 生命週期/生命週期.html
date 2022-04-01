@@ -12,8 +12,8 @@
     <div id="root">
       parent
       <button @click="handleShow">show</button>
-      {{text}}
-      <child v-if="show"></child>
+      {{number}}
+      <!-- <child v-if="show"></child> -->
     </div>
     <script type="text/javascript">
 
@@ -26,7 +26,7 @@
           `,
           data(){
               return {
-                 
+                
               }
           },
           methods:{
@@ -34,19 +34,15 @@
           },
           beforeCreate(){
             // console.log("beforeCreate");
-            // console.log(this.$el); //Vue實體未創建,this.$el為undefined
           },
           created(){
             // console.log("created");
-            // console.log(this.$el); //Vue實體已創建,但未掛載到目標元素，$el為undefined 
           },
           beforeMount(){
             // console.log("beforeMount");
-            // console.log(this.$el); //啥都沒有
           },
           mounted(){
             // console.log("mounted","訪問dom,setInterval,window.onscroll,監聽事件ajax");
-            // console.log(this.$el.outerHTML); //從中可以發現已經將Vue實體上定義的東西
           },
           beforeUpdate(){
             // console.log("beforeUpdate");
@@ -63,11 +59,10 @@
       })
 
 
-      new Vue({
+      let vm = new Vue({
         el: "#root",
         data: {
-            show:true,
-            text:1
+            number:1
         },
         methods:{
             handleShow(){
@@ -77,41 +72,33 @@
         },
         beforeCreate(){
             console.log("beforeCreate");
-            console.log(this.$el); //Vue實體未創建,this.$el為undefined
-            console.log(this.text);//Vue實體未創建,this.text為undefined
-          },
-          created(){
-            console.log("created");
-            console.log(this.$el); //Vue實體已創建,但未掛載到目標元素，$el為undefined
-            console.log(this.text);//Vue實體已創建,this.text為1111
-          },
-          beforeMount(){
-            console.log("beforeMount");
-            console.log(this.text);
-            console.log(this.$el.outerHTML); //流程圖上有提到，在叫用 beforeMount 前 Vue 已經決定模板的樣式，所以在 beforeMount 中的 $el 已經有值了，只是它還未依照 Vue 實體上的定義所渲染，只是個初始設定的模板，因此可以看到 {{a}} 、 v-on 這些模板語法都還未被轉換。
-          },
-          mounted(){
-            console.log("mounted","訪問dom,setInterval,window.onscroll,監聽事件ajax");
-            console.log(this.text);
-            console.log(this.$el.outerHTML); //在 mounted 被叫用時已經把 Vue 實體上的定義綁定到元素上，所以這裡看到的是經由 Vue 渲染後的配置。
-          },
-          beforeUpdate(){
-            console.log("beforeUpdate");
-            console.log(this.text); //data 已經發生改變
-            console.log("this $el : "+this.$el.outerHTML);// a 改變後觸發 beforeUpdate ，可以看到 text 已經變為 2 了，可是頁面上還是 1 ，表示這時雖然 data 已經改變，可是還沒有重新渲染畫面。
-          },
-          updated(){
-            console.log("updated","更新之後已訪問dom");
-            console.log(this.text); //data 已經發生改變
-            console.log(this.show); //data 已經發生改變
-            console.log("this $el : "+this.$el.outerHTML); //完成重新渲染的作業後觸發，這時可以看到畫面已經將 1 改為 2了。
-          },
-          beforeDestroy(){
-            console.log("beforeDestroy-clearInterval , window.scroll=null , $off"); //叫用 beforeDestroy 表示即將執行銷毀動作，如果有些物件要釋放資源可以在這處理。
-          },
-          destroyed(){
-            console.log("destroy-clearInterval , window.scroll=null , $off");//叫用 destroyed 時，實體已經銷毀。
-          }
+            console.log(this.number);// 無法透過vm訪問到data中的參數及methods中的方法(vm尚未進行數據代理及數據劫持，且還沒有將data option中的數據搬到＿data)
+        },
+        created(){
+          console.log("created");
+          console.log(this.number);  //可透過vm訪問到data中的參數及methods中的方法(此時vm已經實例化，完成了數據代理及數據劫持，且＿data已產生)
+        },
+        beforeMount(){
+          console.log("beforeMount");  //頁面上是呈現的是未經過vue編譯的DOM結構，並且對dom的所有操作最終都無效
+        },
+        /* -------------------------after beforeMounted---------------------------
+            將內存中的虛擬DOM轉為真實DOM插入頁面
+        */
+        mounted(){
+          console.log("mounted","訪問dom,setInterval,window.onscroll,監聽事件ajax"); //頁面中呈現的是經過vue編譯的dom結構，此時對dom可進行操作
+        },
+        beforeUpdate(){
+          console.log("beforeUpdate");
+        },
+        updated(){
+          console.log("updated","更新之後已訪問dom");
+        },
+        beforeDestroy(){
+          console.log("beforeDestroy-clearInterval , window.scroll=null , $off"); //叫用 beforeDestroy 表示即將執行銷毀動作，如果有些物件要釋放資源可以在這處理。
+        },
+        destroyed(){
+          console.log("destroy-clearInterval , window.scroll=null , $off");//叫用 destroyed 時，實體已經銷毀。
+        }
       });
     </script>
   </body>
