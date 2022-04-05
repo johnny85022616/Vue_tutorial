@@ -11,14 +11,14 @@
 
     <!--將父組件內容插入道子組中-->
     <div id="root">
-        <div>aaaaaaaa</div> 
+        <child>aaaaaaaa</child> 
     </div>
     <script type="text/javascript">
 
         Vue.component("child",{
             template:`
                 <div>
-                    child
+                    <h2>child</h2>
                     <slot></slot>
                 </diV>
             `,
