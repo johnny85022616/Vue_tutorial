@@ -23,14 +23,46 @@
         el: "#box",
         data: {
           name: "johnny",
-          list:[{name:"111"} , {name:"222"} , {name:"333"} , {name:"444"}]
+          list:[{name:"111" , age:1} , {name:"222" , age:2} , {name:"333" , age:3} , {name:"444" , age:4}]
         },
         methods: {
           handleclick (){
+            /*
+              只有調用array中這7個方法(push , pop . shift , unshift , splice , sort , reverse)，
+              vue才可監測到數據的變化 , 因為這7個方法會改變原來的array
+            */
+
+            // 新增一個元素在最後位置
+            // this.list.push({name:'555' , age:5})
+            // 刪除最後一個元素
+            // this.list.pop()
+            // 刪除第一個元素
+            // this.list.shift()
+            // 在開頭添加一個元素
+            // this.list.unshift({name:'000' , age: 0}) 
+            
+            // 修改指定位置元素
             // this.list[0] = {    //無法直接對指定index做改變(值會改變但不會觸發vue template更新機制)
-            //   name :"555"
+            //   name :"555" , 
+            //   age : 555
             // }
-            this.list.splice(0,1 , {name:"6666"})   // 利用splice刪除原本的再將要改變的插入該位置
+            // this.list.splice(0,1 , {name:"6666" , age:6})   // 利用splice刪除原本的再將要改變的插入該位置
+
+            //刪除指定位置元素
+            // this.list.splice(0,1)
+
+            //在指定位置新增元素
+            // this.list.splice(0,0,{name:'000' , age:0})
+
+            //排序
+            // this.list.sort(function(a,b){
+            //   console.log(a);
+            //   console.log(b);
+            //   return b['age'] > a['age']
+            // })
+
+            //倒序
+            // this.list.reverse()
           }
         },
       });

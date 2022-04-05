@@ -10,43 +10,60 @@
 <body>
     <!--表單綁定(input , checkbox(單選、多選) , radiobutton)-->
     <div id="box">
-        <input type="text" v-model="inputValue"/>
+        <input type="text" v-model.trim="info.inputValue"/>
         <br>
-        <input type="checkbox" v-model="isChecked"/>是否同意
+        <input type="checkbox" v-model="info.isChecked"/>是否同意
 
         <h1>愛好(複選)</h1>
-        <input type="checkbox" v-model="checkgroup" value="run">run
-        <input type="checkbox" v-model="checkgroup" value="swing">swing
-        <input type="checkbox" v-model="checkgroup" value="basketball">basketball
-        <input type="checkbox" v-model="checkgroup" value="baseball">baseball
+        <input type="checkbox" v-model="info.checkgroup" value="run">run
+        <input type="checkbox" v-model="info.checkgroup" value="swing">swing
+        <input type="checkbox" v-model="info.checkgroup" value="basketball">basketball
+        <input type="checkbox" v-model="info.checkgroup" value="baseball">baseball
 
         <br>
         <h1>語言(單選)</h1>
-        <input type="radio" v-model="picked" value="java">java
-        <input type="radio" v-model="picked" value="php">php
-        <input type="radio" v-model="picked" value="python">python
-        <input type="radio" v-model="picked" value="javascript">javascript
+        <input type="radio" v-model="info.picked" value="java">java
+        <input type="radio" v-model="info.picked" value="php">php
+        <input type="radio" v-model="info.picked" value="python">python
+        <input type="radio" v-model="info.picked" value="javascript">javascript
+        <br>
 
+        <h1>城市(單選)</h1>
+            <select v-model="info.city">
+                <option value="">請選擇地區</option>
+                <option value="beijing">北京</option>
+                <option value="shanghai">上海</option>
+                <option value="wuhan">武漢</option>
+            </select>
         <br>
+
+        <h1>其他信息</h1>
+        <textarea v-model.lazy.trim="info.otherText"></textarea>
         <br>
+
         <button @click="handleClick">送出</button>
     </div>
     <script type="text/javascript">
         var vm = new Vue({
             el:"#box",
             data:{
-                inputValue:'',
-                isChecked:false,
-                checkgroup:[],
-                picked:""
+                info:{
+                    inputValue:'',
+                    isChecked:false,
+                    checkgroup:[],
+                    picked:"",
+                    city:'',
+                    otherText:''
+                }
             },
             methods:{
                 handleClick(){
                     let formData = {
-                        inputValue:this.inputValue,
-                        isChecked:this.isChecked,
-                        checkgroup:this.checkgroup,
-                        picked:this.picked
+                        inputValue:this.info.inputValue,
+                        isChecked:this.info.isChecked,
+                        checkgroup:this.info.checkgroup,
+                        picked:this.info.picked,
+                        city:this.info.city
                     }
                     console.log(formData);
                 }

@@ -9,45 +9,66 @@
   </head>
   <body>
     <div id="box">
-      <button type="button" @click="toggleBtn = true">取得 User</button>
-      <p>{{ userComputed }}</p>
-      <p>{{ user }}</p>
+      <h2>今天天氣{{info}}</h2>
+      <button @click="isHot = !isHot">切換天氣</button>
+      <h2>number.a的值是{{number.a}}</h2>
+      <button @click="number.a++">number.a+1</button>
+      <h2>number.b的值是{{number.b}}</h2>
+      <button @click="number.b++">number.b+1</button>
     </div>
 
     <script type="text/javascript">
       var vm = new Vue({
         el: "#box",
         data: {
-          user: "",
-          toggleBtn: false,
-        },
-        methods: {},
-        computed: {  //無法處理非同步工作
-         userComputed() {
-            fetch("../fakeApi/fakeData.json")
-              .then((res) => res.json())
-              .then((res) => {
-                console.log(11111);
-                return res.data.productInfo;
-              });
+          isHot : true ,
+          number : {
+            a:1 ,
+            b:2
           },
+          arr:[1,2,3,4]
         },
-        watch: {  //可以處理非同步工作
-           toggleBtn() {
-            this.user = "loading...";
-            try {
-                fetch("../fakeApi/fakeData.json")
-              .then((res) => res.json())
-              .then((res) => {
-                console.log(11111);
-                this.user = res.data.productInfo;
-              });
-            } catch (error) {
-              console.log(error);
-            }
+        computed: {  
+          info(){
+            return this.isHot ? '炎熱' : '涼爽'
+          }
+        },
+        watch: { 
+          // isHot:{   //監聽data變化
+          //   immediate:true , //初始化時調用一次handler
+          //   handler(newValue , oldValue){
+          //     console.log('isHot 被修改了',newValue , oldValue);
+          //   }
+          // },
+          // info:{  //監聽計算屬性變化
+          //     handler(newValue , oldValue){
+          //       console.log('info 被修改了',newValue , oldValue);
+          //     }
+          // },
+          // 'number.a':{   //監聽多級物件中的某個屬性變化
+          //   handler(newValue , oldValue){
+          //     console.log('a被改變了');
+          //   }
+          // },
+          // number:{
+          //   deep:true , //深度監聽
+          //   handler(newValue , oldValue){
+          //       console.log('number被修改了',newValue , oldValue);
+          //     }
+          // },
+          // 若不需配置項，則可以使用簡寫形式
+          isHot(newValue , oldValue){
+            console.log('isHot 被修改了',newValue , oldValue);
           },
-        },
+        }
       });
+      //也可全域調用
+      // vm.$watch('isHot' , {   
+      //   immediate:true ,
+      //   handler(newValue , oldValue){
+      //         console.log('isHot 被修改了',newValue , oldValue);
+      //   }
+      // })
     </script>
   </body>
 </html>
